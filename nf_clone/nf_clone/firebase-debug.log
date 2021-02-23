@@ -1,0 +1,35 @@
+[debug] [2021-02-15T18:30:30.801Z] ----------------------------------------------------------------------
+[debug] [2021-02-15T18:30:30.805Z] Command:       /usr/local/bin/node /usr/local/bin/firebase init
+[debug] [2021-02-15T18:30:30.805Z] CLI Version:   9.3.0
+[debug] [2021-02-15T18:30:30.805Z] Platform:      darwin
+[debug] [2021-02-15T18:30:30.805Z] Node Version:  v14.15.4
+[debug] [2021-02-15T18:30:30.807Z] Time:          Mon Feb 15 2021 10:30:30 GMT-0800 (Pacific Standard Time)
+[debug] [2021-02-15T18:30:30.807Z] ----------------------------------------------------------------------
+[debug] [2021-02-15T18:30:30.807Z] 
+[debug] [2021-02-15T18:30:30.818Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-02-15T18:30:30.818Z] > authorizing via signed-in user
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Users/royhernandez/projects/nf_clone/nf_clone
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[info] 
+=== Hosting Setup
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
