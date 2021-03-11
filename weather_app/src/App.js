@@ -3,25 +3,43 @@ import './App.css';
 import Current from './components/Current'
 import Forecast from './components/Forecast'
 import Search from './components/Search'
-import {Container, Row, Col } from 'react-bootstrap'
-
+import {Container, Row, Col, fluid, Breadcrumb } from 'react-bootstrap'
+import { useContext } from 'react'
+import { Context } from './Context'
+import context from 'react-bootstrap/esm/AccordionContext';
 function App() {
 
+  const { weather, hasLoaded, setHasloaded, error, setError} = useContext(Context)
+
+  const theme = (weather.isDay === 1 ) ? 'day' : 'night'
+
+  const dayNightClass = (weather.isDay !== 0) ? 'day' : 'night'
 
   return (
+    <div className={`body ${theme}` }> 
+
+    { !hasLoaded  ? 
+<div>
+    <Search/> </div> :   
     
-    <Container style={{height: '100vh'}}>
-      <Row style={{height: '20%', marginBottom: '20px'}}>
-        <Col><Search /></Col>
+        <Container fluid >
+      <Row style={{backgroundColor: 'black'}}className='search-bar' style={{paddingTop: '20px'}}>
+        
+        <Col ><Search/></Col>
+        
       </Row>
-      <Row style={{ height: '45%'}}>
-        <Col><Current/></Col> 
+      <Row >
+        <Col ><Current/></Col>
+       
       </Row>
-      <Row style={{ height: '35%'}}>
-        <Col><Forecast /></Col>
-      </Row>
-   </Container>
-   
+      
+      
+    </Container>   
+    
+  
+}
+
+   </div>
   );
 }
 
