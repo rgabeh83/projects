@@ -22,9 +22,9 @@ function Current(){
         
        <div>
            <div className='current-container'>
-               <Moment parse="hh:mm">
+               {/* <Moment parse="hh:mm">
                    {weather.time}
-               </Moment>
+               </Moment> */}
                <div className="city-time">
                     <p > {(Date().toLocaleString()).slice(0, 16)} </p> 
                     <p>{weather.time}</p>
@@ -51,11 +51,11 @@ function Current(){
                             <p>humidity</p>
                             </div>
                          <div className="wind">
-                            <h3>{weather.wind}</h3>
-                            <p>mph</p>
+                            <h3>{weather.wind}mph</h3>
+                            <p>wind</p>
                             </div>
                     <div className="rain">
-                    <h3 >{weather.precip}</h3>
+                    <h3 >{weather.precip}"</h3>
                             <p>precipitation</p>
                     </div>
                     <div className='uv'>

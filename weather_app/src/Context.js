@@ -26,7 +26,7 @@ function ContextProvider({children}) {
     event.preventDefault()
     getForecast()
       
-    let url=`http://api.weatherapi.com/v1/current.json?key=2999e37b2517493d91b25106210202&q=
+    let url=`https://api.weatherapi.com/v1/current.json?key=2999e37b2517493d91b25106210202&q=
     ${location}`
     fetch(url)
     .then((response) => {
@@ -71,7 +71,7 @@ function ContextProvider({children}) {
         
     }
     const getForecast = ()=>  {
-        const url = `http://api.weatherapi.com/v1/forecast.json?key=2999e37b2517493d91b25106210202&q=${location}`
+        const url = `https://api.weatherapi.com/v1/forecast.json?key=2999e37b2517493d91b25106210202&q=${location}`
       fetch(url)
       .then((response) => {
         if (!response.ok) throw new Error(response.status)
