@@ -17,7 +17,7 @@ const db = {
             body: 'this is the post vent',
             createAt: '2021-03-18T16:19:21.403Z',
             likeCount: 5,
-            commtentCount: 2,
+            commentCount: 2,
         }
     ],
     likes: [
@@ -28,6 +28,16 @@ const db = {
         {
             userHandle: "user",
             postId: "nNtPfXO4jixWZVTtcPMf"
+        }
+    ],
+    notifications: [
+        {
+            recipient: 'user',
+            sender: 'your momma',
+            read: 'true | false',
+            postId: 'ugiugububuuibiuohohbioil',
+            type: 'like | comment',
+            createdAt: "2021-03-31T16:14:35.737Z"
         }
     ]
 }
