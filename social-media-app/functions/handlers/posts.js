@@ -1,25 +1,28 @@
 const { db, admin } = require('../util/admin')
 
 
-exports.getAllPosts = (reg, res) => {
+exports.getAllPosts = (req, res) => {
     db
      .collection('posts')
      .orderBy('createdAt', 'desc')
      .get()
-     .then(data => {
-             let posts = []
-             data.forEach(doc => {
-                 posts.push({
+     .then((data) => {
+             let post = []
+             data.forEach((doc) => {
+                 post.push({
                      postId: doc.id,
                      body: doc.data().body,
-                     userHandle:doc.data().userHandle,
-                     createdAt: doc.data().createdAt
+                     userHandle: doc.data().userHandle,
+                     createdAt: doc.data().createdAt,
+                     commentCount: doc.data().commentCount,
+                     likeCount: doc.data().likeCount,
+                     userImage: doc.data().userImage
  
                  })
              })
-             return res.json(posts)
+             return res.json(post)
          })
-     .catch(err => console.error(error))
+     .catch((err) => console.error(error))
  }
 
 
@@ -35,7 +38,6 @@ exports.getAllPosts = (reg, res) => {
         createdAt: new Date().toISOString(),
         likeCount: 0,
         commentCount: 0
-    
     }
 
 
@@ -82,7 +84,7 @@ exports.getPost = (req, res) => {
 
 exports.commentOnPost = (req, res) => {
     if(req.body.body.trim() === '')
-        return res.status(400).json({ error: 'Must not be empty.'})
+        return res.status(400).json({ comment: 'Must not be empty.'})
 
     const newComment = {
         body: req.body.body,
