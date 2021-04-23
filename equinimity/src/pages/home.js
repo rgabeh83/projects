@@ -8,7 +8,7 @@ const axios = require('axios')
 
 
 
-function Home() {
+function Home(props) {
     const [posts, setPosts] = useState(null)
     
     useEffect(() => {

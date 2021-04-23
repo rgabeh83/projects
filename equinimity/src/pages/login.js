@@ -1,84 +1,114 @@
-import React, { useState } from 'react'
-import withStyles from '@material-ui/core/styles/withStyles'
+import React, { useState, useContext } from 'react'
+import { Link } from 'react-router-dom/'
 import PropTypes from 'prop-types'
 import AppIcon from './yogiIcon.png'
 import axios from 'axios'
+import { Store } from '../store/store'
+
+
 //MUI stuff
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import withStyles from '@material-ui/core/styles/withStyles'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 
-const styles = {
-    form: {
+const styles = (theme) => ({
+    typography: {
+        useNextVariants: true
+      },
+      form: { 
         textAlign: 'center',
-        
-    },
-    image: {
+      },
+      image: {
         maxHeight: 40,
         margin: '20 auto 20 auto'
-    },
-    pageTitle: {
+      },
+      pageTitle: {
         margin: '10px auto 10px auto'
-    },
-    textField: {
+      },
+      textField: {
         margin: '10px auto 10px auto'
-    },
-    button: {
-        marginTop: '10px'
-    },
-    customeError: {
+      },
+      button: {
+        marginTop: '10px',
+        position: 'relative'
+      },
+      customeError: {
         color: 'red', 
         fontSize: 'o.8rem',
+        },
+      progress: {
+        position: 'absolute'
+    
     }
-}
+})
 
 function Login(props) {
-
-    const [state, setState] = useState({
+  
+    const [state, dispatch] = useContext(Store)
+    const [user, setUser] = useState({
         email: '',
         password: '',
-        isLoading: false,
-        errors: {
-        }
-     
+        errors: {}
     })
-    
+ //might need use effect , redux had will will receive props
     function handleSubmit(event){
+       
         event.preventDefault()
             const userData = {
-                email: state.email,
-                password: state.password,
+                email: user.email,
+                password: user.password
             } 
             console.log(userData)
-        axios.post('/login', userData )
-            .then(res => {
-                console.log(res.data)
-                setState({
-                    loading: false,
-                })
-                props.history.push('/')
-            })
-            .catch(err => {
-                setState({
-                 loading: false,
-                 errors: err.response.data
-            })
-            })
-    }
+            axios
+                .post('/login', userData)
+                .then((res) => {
+                            const token = res.data.token
+                            const FBIdToken = `Bearer ${token}`
+                            localStorage.setItem('FBIdToken', FBIdToken);
+                            axios.default.headers.common['Authorization'] = FBIdToken
+                            getUserData ()
+                            dispatch({ type: 'CLEAR_ERRORS' })
+                            // history.push('/')
+                    })
 
+                    .catch((err) => {
+                        dispatch({
+                            type: 'SET_ERRORS',
+                            payload: err.response.data
+                    })
+                })
+           
+    }
+    
     function handleChange(event){
-        setState({
+        setUser({
+            ...state,
             [event.target.name]: event.target.value
         })
+        
     }
 
+    function getUserData (){
 
-
+    
+        dispatch({ type: 'LOADING_USER' })
+        axios.get('/user')
+            .then(res => {
+                  dispatch({
+                      type: 'SET_USER',
+                      payload: res.data
+                  })        
+            })
+            .catch(err => console.log(err))
+    }
+    
 
     const { classes } = props
-    const { errors, loading } = state
+    const { errors } = state
    
     return (
        <Grid container className={classes.form}>
@@ -92,10 +122,8 @@ function Login(props) {
                    <TextField id="email" 
                    name="email" 
                    type="email" 
-                   label="Email"
+                   label="email"
                     className={classes.textField}
-                    // helperText={ }
-                    // error={errors.email ? true : false}
                     value={state.email}
                     onChange={handleChange}
                     fullWidth>
@@ -105,17 +133,19 @@ function Login(props) {
                    type="password" 
                    label="Password"
                     className={classes.textField}
-                    // value={!errors.password === null && errors.password }
                     onChange={handleChange}
                     value={state.password}
                     fullWidth>
-                    </TextField>
-                    {/* {errors.general ? (
-                     <Typography variant="body2" className={classes.customError}>
-                        
-                        </Typography>) : null
-                    } */}
-                    <Button type="submit" varient="contained" color="primary" className={classes.button} onSubmit={handleSubmit}>Login</Button>
+                    </TextField>                    
+                    <Button type="submit"
+                    disabled={state.loading}
+                    varient="contained"
+                    color="primary"
+                    className={classes.button}
+                    onSubmit={handleSubmit}>Login {state.loading && (
+                        <CircularProgress size={30} className={classes.progress}/>)}</Button>
+                    <br/>
+                    <small>Don't have an account? <Link to="/signup" >Sign Up </Link></small>
                     </form>
            </Grid>
            <Grid item sm/>
@@ -123,7 +153,15 @@ function Login(props) {
     )
 }
 
+
+
+
+
+
 Login.propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    loginUser: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired
 }
-export default withStyles(styles)(Login)
+export default (withStyles(styles)(Login))

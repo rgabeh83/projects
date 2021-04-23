@@ -1,9 +1,9 @@
-// import React, { useState, useContext } from 'react'
+// import React, { useState, useContext, useEffect } from 'react'
 // import { Link } from 'react-router-dom/'
 // import PropTypes from 'prop-types'
 // import AppIcon from './yogiIcon.png'
+// import { store } from '../store/store'
 // import axios from 'axios'
-// import { Store }  from '../store/store'
 // //MUI stuff
 // import Grid from '@material-ui/core/Grid'
 // import Typography from '@material-ui/core/Typography'
@@ -11,19 +11,6 @@
 // import Button from '@material-ui/core/Button'
 // import withStyles from '@material-ui/core/styles/withStyles'
 // import CircularProgress from '@material-ui/core/CircularProgress'
-
-
-import React from 'react'
-
-
-export default function Signup(props) {
-    return (
-        <div>
-            Hellogrehrehre
-        </div>
-    )
-}
-
 // const styles = (theme) => ({
 //     typography: {
 //         useNextVariants: true
@@ -51,76 +38,60 @@ export default function Signup(props) {
 //         },
 //       progress: {
 //         position: 'absolute'
-    
 //     }
 // })
-
-
-// function Signup(props) {
-//     const [state, dispatch ] = useContext(Store)
-//     const [newUser, setNewUser] = useState({
+// function Login(props) {
+//     const classes = styles
+//     const [state, dispatch ] = useContext(store)
+//     const [user, setUser] = useState({
 //         email: '',
 //         password: '',
-//         confirmPassword: '',
-//         handle: '',
-//         loading: false,
 //         errors: {}
-     
 //     })
-    
-    
-//   function handleSubmit(event){
+//         // dispatch({ type: 'LOADING_UI' })
+//         // // useEffect(() => {
+//         // //     dispatch({ type: 'LOADING_UI' })
+//         // //     axios
+//         // //     .post('/login', user)
+//         // //     .then((res) => {
+//         // //                 const token = res.data.token
+//         // //                 const FBIdToken = `Bearer ${token}`
+//         // //                 localStorage.setItem('FBIdToken', FBIdToken);
+//         // //                 axios.default.headers.common['Authorization'] = FBIdToken
+//         // //                 dispatch(GetUserData(user))
+//         // //                  dispatch({ type: 'CLEAR_ERRORS' })
+//         // //                 props.history.push('/')
+//         // //         })
+//         // //         .catch((err) => {
+//         // //             dispatch({
+//         // //                 type: 'SET_ERRORS',
+//         // //                 payload: err.response.data
+//         // //         })
+//         // //     }) 
+//         // // }, )
+//     function handleSubmit(event){
 //         event.preventDefault()
-//         //     setNewUser({
-//         //         ...newUser,
-//         //         loading: true
-//         //     })
-//         //     const newUserData = {
-//         //         email: newUser.email,
-//         //         password: newUser.password,
-//         //         confirmPassword: newUser.confirmPassword,
-//         //         handle: newUser.handle
-//         //     }
-//         //     console.log(newUserData)
-//         // axios.post('/signup', newUserData )
-//         //     .then(res => {
-//         //         console.log(res.data)
-//         //         localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`)
-//         //         setNewUser({
-//         //             ...state,
-//         //             loading: true,
-//         //         })
-                
-//         //     })
-//         //     .catch(err => {
-//         //         setNewUser({
-//         //             ...state,
-//         //          loading: false,
-//         //          errors: err.response.data
-//         //     })
-//         //     })
-    
-
+//             const userData = {
+//                 email: user.email,
+//                 password: user.password
+//             } 
+//             console.log(userData)
+//     }
 //     function handleChange(event){
-//         setNewUser({
-//             ...state,
+//         setUser({
+//             ...user,
 //             [event.target.name]: event.target.value
 //         })
 //     }
-
-
-
-
-//     const { classes, errors } = props
-    
-   
+//     // const { classes, UI: { loading } } = props
+//     // const { errors } = state
 //     return (
 //        <Grid container className={classes.form}>
 //            <Grid item sm/>
 //            <Grid item sm>
 //                <img className={classes.image} src={AppIcon} alt="Icon"/>
 //                <Typography variant="h3" className={classes.pageTitle}>
-//                    Signup
+//                    Login
 //                </Typography>
 //                <form noValidate onSubmit={handleSubmit}>
 //                    <TextField id="email" 
@@ -130,7 +101,7 @@ export default function Signup(props) {
 //                     className={classes.textField}
 //                     helperText={state.errors.email}
 //                     error={state.errors.email ? true : false}
-//                     value={newUser.email}
+//                     value={user.email}
 //                     onChange={handleChange}
 //                     fullWidth>
 //                     </TextField>
@@ -141,28 +112,7 @@ export default function Signup(props) {
 //                     className={classes.textField}
 //                     error={state.errors.password ? true : false}
 //                     onChange={handleChange}
-//                     value={newUser.password}
-//                     fullWidth>
-//                     </TextField>
-//                     <TextField id="confirmPassword" 
-//                    name="confirmPassword" 
-//                    type="confirmPassword" 
-//                    label="confirmPassword"
-//                     className={classes.textField}
-//                     helperText={errors.confirmPasswordassword}
-//                     error={errors.confirmPassword ? true : false}
-//                     onChange={handleChange}
-//                     value={newUser.confirmPassword}
-//                     fullWidth>
-//                     </TextField>
-//                     <TextField id="handle" 
-//                    name="handle" 
-//                    type="handle" 
-//                    label="handle"
-//                     className={classes.textField}
-//                     error={state.errors.handle? true : false}
-//                     onChange={handleChange}
-//                     value={newUser.handle}
+//                     value={user.password}
 //                     fullWidth>
 //                     </TextField>
 //                     {state.errors.general ? (
@@ -171,27 +121,36 @@ export default function Signup(props) {
 //                         </Typography>) : null
 //                     }
 //                     <Button type="submit"
-//                     disabled={newUser.loading}
+//                     disabled={state.loading}
 //                     varient="contained"
 //                     color="primary"
 //                     className={classes.button}
-//                     onSubmit={handleSubmit}>Signup {state.loading && (
+//                     onSubmit={handleSubmit}>Login {state.loading && (
 //                         <CircularProgress size={30} className={classes.progress}/>)}</Button>
 //                     <br/>
-//                     <small>Already have an account? <Link to="/signup"> Login </Link></small>
+//                     <small>Don't have an account? <Link to="/signup" >Sign Up </Link></small>
 //                     </form>
 //            </Grid>
 //            <Grid item sm/>
 //        </Grid>
 //     )
 // }
-
-// // export default (withStyles(styles))
-
-// // Signup.propTypes = {
-// //     classes: PropTypes.object.isRequired
-// // }
+// function GetUserData (userData){
+//     const [state, dispatch] = useContext(store)
+//     axios.get('/user')
+//         .then(res => {
+//               dispatch({
+//                   type: 'SET_USER',
+//                   payload: res.data
+//               })        
+//         })
+//         .catch(err => console.log(err))
 // }
-
-
-// export default (withStyles(styles)(Signup))
+// Login.propTypes = {
+//     classes: PropTypes.object.isRequired,
+//     loginUser: PropTypes.func.isRequired,
+//     user: PropTypes.object.isRequired,
+//     UI: PropTypes.object.isRequired
+// }
+// export default (withStyles(styles)(Login))
+"use strict";

@@ -1,58 +1,62 @@
 
 import './App.css';
-import React from 'react'
-
-
-//pages
+import React, { useContext } from 'react'
 import Home from './pages/home'
-import Signup from './pages/signup'
+import Signup  from './pages/signup'
 import Login from './pages/login'
+// import jwtDecode from 'jwt-decode'
+import { Store } from './store/store'
 
 //Material UI
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple'
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme'
+import themeFile from './util/theme'
 
 //components
 import Navbar from './components/navbar'
-const { BrowserRouter , Route, Switch } = require('react-router-dom')
+import  { GlobalState  } from './store/store';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: purple[500],
-    },
-    secondary: {
-      main: '#f44336',
-    },
-  },
-  typography: {
-    useNextVariants: true
-  }
-})
+const { BrowserRouter, Switch, Route } = require('react-router-dom')
+
+
+const theme = createMuiTheme(themeFile)
+
+
+// let authenticated
+// const token = localStorage.FBIdToken
+// if(token) {
+//   const decodedToken = jwtDecode(token)
+//   if(decodedToken.exp * 1000 < Date.now()){
+//     window.location.href= '/login'
+//     authenticated = false
+//   } else {
+//     authenticated = true
+//   }
+// }
+
+
 
 function App() {
   return (
+  
     <MuiThemeProvider theme={theme}>
-    <div className="App">
+     <GlobalState >
+     
       <header className="App-header">
-        <p>
-          
-          <BrowserRouter>
+         
             <Navbar/>
             <div className="container">
             <Switch>
-              <Route exact path="/" component={Home}/>
-              <Route path="/login" component={Login}/>
-              <Route path="/signup" component={Signup}/>
+                <Route exact path to="/" component={Home}/>
+                <Route  component={Login}to="/login" />
+                 <Route  component={Signup} to="/signup" />   
             </Switch>
             </div>
-          </BrowserRouter> 
           
-        </p>
       </header>
-    </div>
+      </GlobalState>
     </MuiThemeProvider>
+    
   );
 }
 
