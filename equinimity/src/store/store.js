@@ -1,7 +1,18 @@
 import React, { createContext, useReducer } from 'react'
-import Reducer from './reducer'
+import Reducer from './reducers'
 
 const initialState = {
+    
+        userId: '',
+        email: '',
+        handle: '',
+        createdAt: '',
+        imageUrl: "",
+        bio: "",
+        website: "",
+        location: '',
+        loading: false,
+        errors: []
 }
 
 

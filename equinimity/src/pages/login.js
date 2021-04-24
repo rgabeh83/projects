@@ -56,7 +56,7 @@ function Login(props) {
     })
  //might need use effect , redux had will will receive props
     function handleSubmit(event){
-       
+       dispatch({type: 'LOADING'})
         event.preventDefault()
             const userData = {
                 email: user.email,
@@ -86,15 +86,13 @@ function Login(props) {
     
     function handleChange(event){
         setUser({
-            ...state,
+            ...user,
             [event.target.name]: event.target.value
         })
         
     }
 
     function getUserData (){
-
-    
         dispatch({ type: 'LOADING_USER' })
         axios.get('/user')
             .then(res => {
@@ -108,7 +106,8 @@ function Login(props) {
     
 
     const { classes } = props
-    const { errors } = state
+    const { errors, loading } = state
+    
    
     return (
        <Grid container className={classes.form}>
@@ -124,7 +123,9 @@ function Login(props) {
                    type="email" 
                    label="email"
                     className={classes.textField}
-                    value={state.email}
+                    helperText={errors.email}
+                    error={errors.email ? true : false}
+                    value={user.email}
                     onChange={handleChange}
                     fullWidth>
                     </TextField>
@@ -133,12 +134,16 @@ function Login(props) {
                    type="password" 
                    label="Password"
                     className={classes.textField}
+                    helperText={errors.password}
+                    error={errors.passwordl ? true : false}
                     onChange={handleChange}
-                    value={state.password}
+                    value={user.password}
                     fullWidth>
-                    </TextField>                    
+                    </TextField>
+                   {errors.general && (<Typography variant="body2" className={classes.customErrors}></Typography>)}
+                                   
                     <Button type="submit"
-                    disabled={state.loading}
+                    disabled={loading}
                     varient="contained"
                     color="primary"
                     className={classes.button}

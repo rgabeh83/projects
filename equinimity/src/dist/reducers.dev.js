@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = exports.Reducer = void 0;
+exports["default"] = _default;
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -11,25 +11,11 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var Reducer = function Reducer(state, action) {
+function _default() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
   switch (action.type) {
-    case 'SET_ERRORS':
-      return _objectSpread({}, state, {
-        loading: false,
-        errors: action.payload
-      });
-
-    case 'CLEAR_ERRORS':
-      return _objectSpread({}, state, {
-        loading: false,
-        errors: null
-      });
-
-    case 'LOADING_UI':
-      return _objectSpread({}, state, {
-        loading: true
-      });
-
     case 'SET_AUTHENTICATED':
       return _objectSpread({}, state, {
         authenticated: true
@@ -39,15 +25,25 @@ var Reducer = function Reducer(state, action) {
       return _objectSpread({}, state);
 
     case 'SET_USER':
-      return _objectSpread({}, state, {
-        authenticated: true
+      return _objectSpread({
+        authenticated: true,
+        loading: false
       }, action.payload);
+
+    case 'LOADING_USER':
+      return _objectSpread({}, state, {
+        loading: true
+      });
+
+    case 'LOADING':
+      return _objectSpread({}, state, {
+        loading: true
+      });
+
+    case 'CLEAR_ERRORS':
+      return _objectSpread({}, state);
 
     default:
       return state;
   }
-};
-
-exports.Reducer = Reducer;
-var _default = Reducer;
-exports["default"] = _default;
+}

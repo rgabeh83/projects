@@ -1,11 +1,9 @@
 
 import './App.css';
-import React, { useContext } from 'react'
 import Home from './pages/home'
 import Signup  from './pages/signup'
 import Login from './pages/login'
-// import jwtDecode from 'jwt-decode'
-import { Store } from './store/store'
+import jwtDecode from 'jwt-decode'
 
 //Material UI
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
@@ -16,23 +14,23 @@ import themeFile from './util/theme'
 import Navbar from './components/navbar'
 import  { GlobalState  } from './store/store';
 
-const { BrowserRouter, Switch, Route } = require('react-router-dom')
+import  { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 
 const theme = createMuiTheme(themeFile)
 
 
-// let authenticated
-// const token = localStorage.FBIdToken
-// if(token) {
-//   const decodedToken = jwtDecode(token)
-//   if(decodedToken.exp * 1000 < Date.now()){
-//     window.location.href= '/login'
-//     authenticated = false
-//   } else {
-//     authenticated = true
-//   }
-// }
+let authenticated
+const token = localStorage.FBIdToken
+if(token) {
+  const decodedToken = jwtDecode(token)
+  if(decodedToken.exp * 1000 < Date.now()){
+    window.location.href= '/login'
+    authenticated = false
+  } else {
+    authenticated = true
+  }
+}
 
 
 
@@ -44,13 +42,17 @@ function App() {
      
       <header className="App-header">
          
-            <Navbar/>
+            
             <div className="container">
+              <Router>
+              
             <Switch>
-                <Route exact path to="/" component={Home}/>
-                <Route  component={Login}to="/login" />
-                 <Route  component={Signup} to="/signup" />   
+              <Navbar/>
+              <Route exact path="/" component={Home}/>
+              <Route exact path="/login" component={Login}/>
+              <Route exact path="/signup" component={Signup}/>
             </Switch>
+            </Router>
             </div>
           
       </header>
