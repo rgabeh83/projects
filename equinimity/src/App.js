@@ -41,20 +41,19 @@ function App() {
      <GlobalState >
      
       <header className="App-header">
-         
-            
+      <Router>
+      <Navbar/>
             <div className="container">
-              <Router>
-              
+             
             <Switch>
-              <Navbar/>
+             
               <Route exact path="/" component={Home}/>
               <Route exact path="/login" component={Login}/>
               <Route exact path="/signup" component={Signup}/>
             </Switch>
-            </Router>
+            
             </div>
-          
+            </Router>
       </header>
       </GlobalState>
     </MuiThemeProvider>

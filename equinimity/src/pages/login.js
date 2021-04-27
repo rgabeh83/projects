@@ -66,23 +66,41 @@ function Login(props) {
             axios
                 .post('/login', userData)
                 .then((res) => {
+                    dispatch({ type: 'CLEAR_ERRORS' })
+                            console.log("res =", res)
                             const token = res.data.token
                             const FBIdToken = `Bearer ${token}`
                             localStorage.setItem('FBIdToken', FBIdToken);
-                            axios.default.headers.common['Authorization'] = FBIdToken
-                            getUserData ()
-                            dispatch({ type: 'CLEAR_ERRORS' })
-                            // history.push('/')
-                    })
+                            
+                            axios.defaults.headers.common['Auth-Token'] = token
+                            dispatch(getUserData())
+                           
+                            // dispatch(getUserData ())
+                            // dispatch({ type: 'CLEAR_ERRORS'})
+                            
+
+
+                            //Check firebase logs - find out why getuser() not working. 
+
+                            
+                    })e
 
                     .catch((err) => {
+                        console.log('err=', err)
                         dispatch({
                             type: 'SET_ERRORS',
-                            payload: err.response.data
-                    })
-                })
-           
-    }
+                            payload: console.log(err)
+                        })
+                    }
+
+                    //     dispatch({
+                    //         type: 'SET_ERRORS',
+                    //         payload: err.res.data
+                    // })
+                
+                    )
+                
+            }
     
     function handleChange(event){
         setUser({
@@ -106,7 +124,8 @@ function Login(props) {
     
 
     const { classes } = props
-    const { errors, loading } = state
+    const { errors } = user
+    const { loading } = state
     
    
     return (
@@ -165,8 +184,6 @@ function Login(props) {
 
 Login.propTypes = {
     classes: PropTypes.object.isRequired,
-    loginUser: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
-    UI: PropTypes.object.isRequired
 }
 export default (withStyles(styles)(Login))

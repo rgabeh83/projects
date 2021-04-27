@@ -1,4 +1,6 @@
-export default function(state = initialState, action) {
+
+
+export default function Reducer(state, action, initialState) {
     switch (action.type) {
       case 'SET_AUTHENTICATED':
         return {
@@ -7,8 +9,8 @@ export default function(state = initialState, action) {
         };
       case 'SET_UNAUTHENTICATED':
         return {
-            ...state
-        }
+          initialState
+          }      
       case 'SET_USER':
         return {
           authenticated: true,
@@ -20,7 +22,7 @@ export default function(state = initialState, action) {
           ...state,
           loading: true
         };
-        case 'LOADING':
+        case 'LOADING_UI':
             return {
                 ...state,
                 loading: true
@@ -28,8 +30,20 @@ export default function(state = initialState, action) {
         case 'CLEAR_ERRORS':
             return {
                 ...state,
-                
+                loading: false,
+                errors: null
             }
+        case 'SET_ERRORS':
+            return {
+              ...state,
+              loading: false,
+              errors: action.payload
+            }
+        case 'STOP_LOADING_UI':
+            return {
+                ...state,
+                loading: false
+              }
       default:
         return state;
     }

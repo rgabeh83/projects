@@ -2,17 +2,15 @@ import React, { createContext, useReducer } from 'react'
 import Reducer from './reducers'
 
 const initialState = {
-    
-        userId: '',
-        email: '',
-        handle: '',
-        createdAt: '',
-        imageUrl: "",
-        bio: "",
-        website: "",
-        location: '',
+        screams: [],
+        scream: {},
         loading: false,
-        errors: []
+        errors: null,
+        authenticated: false,
+        credentials: {},
+        likes: [],
+        notifications: []
+        
 }
 
 
