@@ -177,7 +177,7 @@ exports.getAuthenticatedUser = function (req, res) {
     });
     return res.json(userData);
   })["catch"](function (err) {
-    console.err(err);
+    console.error(err);
     return res.status(500).json({
       error: err.code
     });

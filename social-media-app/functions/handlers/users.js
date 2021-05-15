@@ -75,7 +75,7 @@ exports.login = (req, res) => {
   
 
     firebase.auth().signInWithEmailAndPassword(user.email, user.password)
-        .then(data => {
+        .then((data) => {
             return data.user.getIdToken()
         })
         .then(token => {
@@ -146,23 +146,23 @@ exports.getUserDetails = (req, res) => {
 exports.getAuthenticatedUser = (req, res) => {
     let userData = {}
     db.doc(`/user/${req.user.handle}`).get()
-        .then(doc => {
+        .then((doc) => {
             if(doc.exists){
-                userData.credentials =doc.data()
+                userData.credentials = doc.data()
                 return db.collection('likes').where('userHandle', '==', req.user.handle).get()
             }
         })
-        .then(data => {
+        .then((data) => {
             userData.likes = []
-            data.forEach(doc => {
+            data.forEach((doc) => {
                 userData.likes.push(doc.data())
             })
             return db.collection('notifications').where('recipient', '==', req.user.handle)
                 .orderBy('createdAt', 'desc').limit(10).get()
         })
-        .then(data => {
+        .then((data) => {
             userData.notifications =[]
-            data.forEach(doc => {
+            data.forEach((doc) => {
                 userData.notifications.push({
                     recipient: doc.data().recipient,
                     createdAt: doc.data().createdAt,
@@ -175,8 +175,8 @@ exports.getAuthenticatedUser = (req, res) => {
             })
             return res.json(userData)
         })
-        .catch(err => {
-            console.err(err)
+        .catch((err) => {
+            console.error(err)
             return res.status(500).json({ error: err.code})
         })
 }
