@@ -127,8 +127,10 @@ const styles = (theme) => ({
             open: false
         })
 
-        const { editUserDetails }= useContext(Context)
+        console.log(editUserInfo)
 
+        const { editUserDetails, state: { credentials }}= useContext(Context)
+        console.log(credentials)
         
         function mapUserDetailsToState(credentials){
             setEditUserInfo({
@@ -140,36 +142,42 @@ const styles = (theme) => ({
         }
 
 
-        function handleOpen() {
+        function handleOpen(credentials) {
             setEditUserInfo({
                 ...editUserInfo,
                 open: true
             })
-            // mapUserDetailsToState(props.credentials)
+           
+            
         }
         function handleClose(){
             setEditUserInfo({
+                ...editUserInfo,
                 open: false})
         }
       
 
-        // useEffect(() => {
-        //     const { credentials } = props
-        //     mapUserDetailsToState(credentials)
-        // }, [])
+        useEffect(() => {
+            mapUserDetailsToState(credentials)
+            
+            
+        }, [])
 
         function handleChange (event) {
-            setEditUserInfo({
-                // ...editUserInfo,
+            
+               setEditUserInfo({
+                ...editUserInfo,
                 [event.target.name] : event.target.value
             })
         }
 
         function handleSubmit() {
-            // con
-
-            console.log('handleSubmit')
-            
+            const userDetails = {
+                bio: editUserInfo.bio,
+                website: editUserInfo.website,
+                location: editUserInfo.location
+            }
+            editUserDetails(userDetails)
             handleClose()
         }
 
@@ -177,7 +185,7 @@ const styles = (theme) => ({
      ////PUT 
 
        
-        const { classes } = props
+        const { classes }  = props
         return (
             <div>
 
@@ -205,7 +213,7 @@ const styles = (theme) => ({
                                         rows="3"
                                         placeholder="A short bio about yourself"
                                         className={classes.textField}
-                                        value="{editUserInfo.bio}"
+                                        value={editUserInfo.bio}
                                         onChange={handleChange}
                                         fullWidth
                                     >
@@ -218,7 +226,7 @@ const styles = (theme) => ({
                                         rows="3"
                                         placeholder="Your personal/professional website"
                                         className={classes.textField}
-                                        value=""
+                                        value={editUserInfo.website}
                                         onChange={handleChange}
                                         fullWidth
                                     >
@@ -231,7 +239,7 @@ const styles = (theme) => ({
                                         rows="3"
                                         placeholder="Your location"
                                         className={classes.textField}
-                                        value="{editUserInfo.location}"
+                                        value={editUserInfo.location}
                                         onChange={handleChange}
                                         fullWidth
                                     >
