@@ -54,9 +54,9 @@ function Login(props) {
         errors: {}
     })
   
-    const {  state, loginUser, logout  } = useContext(Context)
+    const {  state, loginUser, logout } = useContext(Context)
 
-  let history = useHistory()
+
    
 
     function handleSubmit(event){
@@ -67,7 +67,7 @@ function Login(props) {
             } 
            
 
-          loginUser(userData, history)
+          loginUser(userData, window.history)
           
           }
       

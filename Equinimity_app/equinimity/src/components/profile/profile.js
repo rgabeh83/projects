@@ -1,9 +1,10 @@
-import React, { useContext, Fragment } from 'react'
+import React, { useContext, useState, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import withStyles from '@material-ui/core/styles/withStyles'
 import { Link } from 'react-router-dom'
 import dayJs from 'dayjs'
 import { Context } from '../../context/context'
+import EditDetails from '../../components/editDetails'
 
 //MUI 
 import MyButton from '../../util/myButton'
@@ -13,11 +14,19 @@ import MuiLink from '@material-ui/core/Link'
 import { Typography } from '@material-ui/core'
 import { Button } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
-
+import IconButton from '@material-ui/core/IconButton'
+import ToolTip from '@material-ui/core/Tooltip'
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 //Icons
 import LocationOn from '@material-ui/icons/LocationOn'
 import LinkIcon from '@material-ui/icons/Link'
 import CalendarToday from '@material-ui/icons/CalendarToday'
+import EditIcon from '@material-ui/icons/Edit'
+import KeyboardReturn from '@material-ui/icons/KeyboardReturn'
 
 const styles = (theme) => ({
     palette: {
@@ -82,7 +91,8 @@ const styles = (theme) => ({
           height: 200,
           objectFit: 'cover',
           maxWidth: '100%',
-          borderRadius: '50%'
+          borderRadius: '50%',
+          margin: '0 auto'
         },
         '& .profile-details': {
           textAlign: 'center',
@@ -113,13 +123,74 @@ const styles = (theme) => ({
 
 function Profile(props) {
 const { state:  { credentials: { handle, createdAt, imageUrl, bio, website, location }, loading, authenticated }} = useContext(Context)
+  const { logout, uploadImage, getUserData} = useContext(Context)
 const { classes } = props
+
+const [ editUserInfo, setEditUserInfo ]  = useState({
+  // bio: '',
+  // website: '',
+  // location: '',
+  open: false
+})
+function handleImageChange(event) {
+  const image = event.target.files[0]
+  console.log('handleImageChange')
+  const formData = new FormData()
+  formData.append('image', image, image.name)
+  uploadImage(formData)
+}
+
+function handleEditPicture() {
+  console.log('handleEditPicture')
+  const fileInput = document.getElementById('imageInput')
+  fileInput.click()
+}
+
+function handleLogout() {
+  logout()
+}
+
+function handleOpen() {
+  setEditUserInfo({
+      ...editUserInfo,
+      open: true
+  })
+  // mapUserDetailsToState(props.credentials)
+}
+function handleClose(){
+  setEditUserInfo({
+      open: false})
+}
+
+function handleChange (event) {
+  setEditUserInfo({
+      // ...editUserInfo,
+      [event.target.name] : event.target.value
+  })
+}
+
+function handleSubmit() {
+  // con
+
+  console.log('handleSubmit')
+  
+  handleClose()
+}
 
 let profileMarkup = !loading ? (authenticated ? (
     <Paper className={classes.paper}>
         <div className={classes.profile}>
-            <div className="profile-image">
-                <img src={imageUrl} alt="profile"/>
+            <div className="image-wrapper">
+                <img className="profile-image" src={imageUrl} alt="profile"/>
+                <input type="file"
+                id="imageInput" 
+                hidden="hidden"
+                onChange={handleImageChange}/>
+                <ToolTip title="Edit profile picture" placement="bottom">
+                <IconButton onClick={handleEditPicture} className="button">
+                  <EditIcon color="primary"></EditIcon>
+                  </IconButton>
+                  </ToolTip>
             </div>
             <hr/>
             <div className="profile-details">
@@ -147,8 +218,13 @@ let profileMarkup = !loading ? (authenticated ? (
             )}
             <CalendarToday color="primary"/>{''}
             <span>Joined {dayJs(createdAt).format('MMM YYYY')}</span>
-         
             </div>
+            <ToolTip title="Logout" placement="bottom">
+              <IconButton onClick={handleLogout}>
+                <KeyboardReturn color="primary"></KeyboardReturn>
+                </IconButton>
+              </ToolTip>
+              <EditDetails props={props}/>
         </div>
     </Paper>
 ) : (

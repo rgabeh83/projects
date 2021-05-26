@@ -10,7 +10,7 @@ import { ContextProvider } from './context/context'
 //Material UI
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme'
-import themeFile from './util/theme'
+import themeObject from './util/theme'
 
 
 //components
@@ -20,7 +20,7 @@ import Navbar from './components/navbar'
 import  { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 
-const theme = createMuiTheme(themeFile)
+const theme = createMuiTheme(themeObject)
 
 
 // let authenticated

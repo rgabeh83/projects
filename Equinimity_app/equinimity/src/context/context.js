@@ -6,7 +6,7 @@ import axios from 'axios'
 
 const Context = createContext()
 
-function ContextProvider({ children, history }) {
+function ContextProvider({ children }) {
 
     
 
@@ -20,6 +20,8 @@ function ContextProvider({ children, history }) {
 
         })
 
+       
+
         function loginUser(userData, history) {
             setState({
                 ...state,
@@ -31,11 +33,10 @@ function ContextProvider({ children, history }) {
                        setAuthorizationHeader(res.data.token)
                                 setState({
                                 ...state,
-                                loading: false,
-                                authenticated: true,
+                                loading: false,                                
                             })
                             getUserData()
-                            history.push('/')
+                            
                             
                             
                     })
@@ -44,12 +45,14 @@ function ContextProvider({ children, history }) {
                     .catch((err) => {
                         console.log('err=', err)
                     })
+                   
                 }
 
                 function getUserData (){
                     setState({
                         ...state,
                         loading: true,
+                        
                        
                     })
                     axios.get('/user')
@@ -57,9 +60,11 @@ function ContextProvider({ children, history }) {
                              setState({
                                  ...state,
                                  loading: false,
+                                 authenticated: true,
                                  credentials: res.data.credentials,
                                  likes: res.data.likes,
                                  notifications: res.data.likes,
+                                 
                              } )
                              console.log(state)
                                      
@@ -89,9 +94,13 @@ function ContextProvider({ children, history }) {
                   };
 
                 function logout(event) {
-                    event.preventDefault()
+                        console.log('logout')
                        localStorage.removeItem('FBIdToken');
                         delete axios.defaults.headers.common['Authorization'];
+                        setState({
+                            ...state,
+                            authenticated: false
+                        })
                       };
                 
 
@@ -101,13 +110,38 @@ function ContextProvider({ children, history }) {
             localStorage.setItem('FBIdToken', FBIdToken);
             axios.defaults.headers.common['Authorization'] = FBIdToken
         }
+        
+        function uploadImage(formData) {
+       
+            axios.post('/user/image', formData)
+                .then(() => {
+                    
+                })
+                .catch(err => console.log(err))
+        }
+
+        function editUserDetails(userDetails) {
+            setState({
+                ...state,
+                loading: true,
+            })
+            axios.post('/user', userDetails)
+            .then(() => {
+                getUserData()
+            })
+            .catch((err) => console.log(err))
+        }
 
     return (
         <Context.Provider value={{
             state,
             loginUser,
             signupUser,
-            logout
+            logout,
+            uploadImage,
+            logout,
+            editUserDetails,
+            
         }}>
                {children} 
        </Context.Provider>

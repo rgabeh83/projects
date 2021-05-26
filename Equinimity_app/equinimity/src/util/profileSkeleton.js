@@ -27,7 +27,26 @@ const styles = (theme) => (
         textAlign: 'center'
       },
       image: {
-        margin: '20px auto 20px auto'
+        margin: '20px auto 20px auto',
+        minWidth: 150,
+      },
+      handle: {
+        height: 20,
+        backgroundColor: theme.palette.primary.main,
+        width: 60,
+        margin: '0 auto 7px auto'
+      },
+      fullLine: {
+        height: 15,
+        backgroundColor: 'rgba(0,0,0,0.6)',
+        width: '100%',
+        marginBottom: 10
+      },
+      halfLine: {
+        height: 15,
+        backgroundColor: 'rgba(0,0,0,0.6)',
+        width: '50%',
+        marginBottom: 10
       },
       pageTitle: {
         margin: '10px auto 10px auto'
@@ -70,8 +89,8 @@ const styles = (theme) => (
           }
         },
         '& .profile-image': {
-          width: 200,
-          height: 200,
+          width: '20px',
+          height: 'auto',
           objectFit: 'cover',
           maxWidth: '100%',
           borderRadius: '50%'
@@ -111,7 +130,7 @@ function ProfileSkeleton(props) {
         <Paper className={classes.paper}>
             <div className={classes.profile}>
                 <div className="image-wrapper">
-                    <img src={NoImg} alt="profile" className="profile-image"/>
+                    <img src={NoImg} alt="profile" className={`profile-image ${classes.image}`}/>
                 </div>
            
             <hr/>

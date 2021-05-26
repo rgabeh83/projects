@@ -183,7 +183,7 @@ exports.getAuthenticatedUser = (req, res) => {
 
 
 exports.uploadImage = (req, res) => {
-    const BusBoy = require('BusBoy')
+    const BusBoy = require('busboy')
     const path = require('path')
     const os = require('os')
     const fs = require('fs')
@@ -192,6 +192,7 @@ exports.uploadImage = (req, res) => {
 
     let imageFileName;
     let imageToBeUploaded = {}
+
     
 
     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
@@ -204,13 +205,14 @@ exports.uploadImage = (req, res) => {
         //my.image.png
         
         const imageExtension = filename.split('.')[filename.split('.').length - 1]
-        const imageFileName = `${Math.round(Math.random()*10000000000)}.${imageExtension}`
+        imageFileName = `${Math.round(Math.random()*10000000000)}.${imageExtension}`
         const filepath = path.join(os.tmpdir(), imageFileName)
         imageToBeUploaded = { filepath, mimetype}
         file.pipe(fs.createWriteStream(filepath))
     })
     busboy.on('finish', () => {
-        admin.storage().bucket().upload(imageToBeUploaded.filepath, {
+        admin.storage()
+        .bucket().upload(imageToBeUploaded.filepath, {
             resumable: false,
             metadata: {
                 metadata: {
