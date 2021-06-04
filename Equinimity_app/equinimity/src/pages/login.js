@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
+
 import { Link } from 'react-router-dom/'
 import PropTypes from 'prop-types'
 import AppIcon from './yogiIcon.png'
@@ -53,11 +54,8 @@ function Login(props) {
         password: '',
         errors: {}
     })
-  
+  const history = useHistory()
     const {  state, loginUser, logout } = useContext(Context)
-
-
-   
 
     function handleSubmit(event){
         event.preventDefault()
@@ -67,7 +65,7 @@ function Login(props) {
             } 
            
 
-          loginUser(userData, window.history)
+          loginUser(userData, history)
           
           }
       

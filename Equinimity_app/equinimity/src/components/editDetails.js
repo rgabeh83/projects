@@ -6,15 +6,14 @@ import MyButton from '../util/myButton'
 
 
 //Mui Icons
-import  EditIcon  from '@material-ui/icons/Edit';
-import ToolTip from '@material-ui/core/ToolTip'
+import  EditIcon  from '@material-ui/icons/Edit'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import IconButton from '@material-ui/core/IconButton'
+
 ;
 
 
@@ -190,12 +189,10 @@ const styles = (theme) => ({
             <div>
 
                 Edit User
-                <Fragment>
-                    <ToolTip title="Edit Details" placement="bottom">
-                        <IconButton onClick={handleOpen} >
-                            <EditIcon color="primary"/>
-                        </IconButton>
-                        </ToolTip>
+                <Fragment>                        
+                        <MyButton tip="Edit Details" placement="bottom" onClick={handleOpen} btnClassName={classes.button}>
+                        <EditIcon color="primary"/>
+                        </MyButton>
                     
                     <Dialog
                         open={editUserInfo.open}

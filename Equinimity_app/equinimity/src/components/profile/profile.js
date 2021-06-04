@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom'
 import dayJs from 'dayjs'
 import { Context } from '../../context/context'
 import EditDetails from '../../components/editDetails'
+import MyButton from '../../util/myButton'
 
 //MUI 
-import MyButton from '../../util/myButton'
+
 import ProfileSkeleton from '../../util/profileSkeleton'
 import { Profiler } from 'react'
 import MuiLink from '@material-ui/core/Link'
@@ -185,12 +186,10 @@ let profileMarkup = !loading ? (authenticated ? (
                 <input type="file"
                 id="imageInput" 
                 hidden="hidden"
-                onChange={handleImageChange}/>
-                <ToolTip title="Edit profile picture" placement="bottom">
-                <IconButton onClick={handleEditPicture} className="button">
-                  <EditIcon color="primary"></EditIcon>
-                  </IconButton>
-                  </ToolTip>
+                onChange={handleImageChange}/>                 
+                  <MyButton tip="Edit profile picture" onClick={handleEditPicture} className="button">
+                    <EditIcon color="primary"></EditIcon>
+                  </MyButton>
             </div>
             <hr/>
             <div className="profile-details">
@@ -219,12 +218,12 @@ let profileMarkup = !loading ? (authenticated ? (
             <CalendarToday color="primary"/>{''}
             <span>Joined {dayJs(createdAt).format('MMM YYYY')}</span>
             </div>
-            <ToolTip title="Logout" placement="bottom">
-              <IconButton onClick={handleLogout}>
-                <KeyboardReturn color="primary"></KeyboardReturn>
-                </IconButton>
-              </ToolTip>
-              <EditDetails props={props}/>
+          
+              
+              <MyButton tip="Logout" onClick={handleLogout}>
+                <KeyboardReturn color="primary"/>
+            </MyButton>
+            <EditDetails props={props}/>
         </div>
     </Paper>
 ) : (
